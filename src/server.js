@@ -5,9 +5,12 @@ const app = express()
 
 const routes = require('./routes/routes')
 
+const db = require('./database/database')
+
 // app.set('view engine', 'ejs')
 // app.set('views', path.join(__dirname, 'views'))
 
+db.connect()
 
 // app.use(express.static(path.join(__dirname, 'public')))
 
