@@ -1,5 +1,7 @@
 const express = require('express')
 // const path = require('path')
+//Cors
+const cors = require('cors')
 
 const app = express()
 
@@ -11,6 +13,28 @@ const db = require('./database/database')
 // app.set('views', path.join(__dirname, 'views'))
 
 db.connect()
+
+const allowedOrigins = [
+    'http://127.0.0.1:5500',
+    'https://magnuseducacao.com.br'
+]
+
+//Habilitando o Cors
+app.use(cors({
+    origin: function(origin, callback){
+        let allowed = true
+        
+        //App Mobile
+        if(!origin) allowed = true
+
+        if(!allowedOrigins.include(origin)) allowed = false
+        
+        callback(null, allowed)
+    }
+}))
+
+//Habilita o CORS para todo mundo
+// app.use(cors())
 
 // app.use(express.static(path.join(__dirname, 'public')))
 
