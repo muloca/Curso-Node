@@ -1,40 +1,57 @@
-const ProductsModel = require('../models/products')
+const ProductsModel = require("../models/products");
 
-async function get(req, res){
+async function get(req, res) {
+  const { id } = req.params;
 
-    const { id } = req.params
+  let obj = id ? { _id: id } : null;
 
-    let obj = id ? { _id: id} : null
+  const products = await ProductsModel.find(obj);
 
-
-    const products = await ProductsModel.find(obj)
-
-    res.send(products)
+  res.send(products);
 }
 
 async function post(req, res) {
-    const {
-        name,
-        brand,
-        price,
-    } = req.body
+  const { name, brand, price } = req.body;
 
-    const product = new ProductsModel({
-        name,
-        brand,
-        price,
-    })
+  const product = new ProductsModel({
+    name,
+    brand,
+    price,
+  });
 
-    // console.log(req.body)
-    product.save()
+  // console.log(req.body)
+  product.save();
 
-    res.send({
-        message: "Sucesso ao salvar",
-        product: req.body
-    })
+  res.send({
+    message: "Sucesso ao salvar",
+    product: req.body,
+  });
+}
+
+async function put(req, res) {
+  const { id } = req.params;
+
+
+const product = await ProductsModel.findOneAndUpdate({ _id: id}, req.body, {new: true})
+
+res.send({
+    message: 'Produto atualizado com sucesso',
+    product,
+})
+
+// Atualiza um dado sem retornar o dado
+//   const product = await ProductsModel.findOne({ _id: id });
+
+//   await product.updateOne(req.body);
+
+//   res.send({
+//     message: "Atualizado com sucesso",
+//     product,
+//   });
 }
 
 module.exports = {
-    get,
-    post,
-}
+  get,
+  post,
+  put,
+};
