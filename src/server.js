@@ -16,6 +16,9 @@ db.connect()
 
 // app.use(express.urlencoded({ extended: true }))
 
+//Habilita server para recebr dados no formato JSON
+app.use(express.json())
+
 app.use('/api', routes)
 
 // app.use((req, res) => {
