@@ -14,12 +14,14 @@ const db = require('./database/database')
 
 db.connect()
 
+
+// CORS com proteção de dominios
 const allowedOrigins = [
     'http://127.0.0.1:5500',
     'https://magnuseducacao.com.br'
 ]
 
-//Habilitando o Cors
+// Habilitando o Cors
 app.use(cors({
     origin: function(origin, callback){
         let allowed = true
@@ -27,7 +29,7 @@ app.use(cors({
         //App Mobile
         if(!origin) allowed = true
 
-        if(!allowedOrigins.include(origin)) allowed = false
+        if(!allowedOrigins.includes(origin)) allowed = false
         
         callback(null, allowed)
     }
